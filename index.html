@@ -94,57 +94,58 @@
                 <option value="10">November</option>
                 <option value="11">December</option>
             </select>
-            <h2>Monthly Habit Progress</h2>
-            <canvas id="habitChart"></canvas>
-
-            <h2>Mood Distribution</h2>
-            <canvas id="moodChart"></canvas>
 
             <div class="analytics-container">
                 <div class="card">
-                    <h2>Today's Progress</h2>
-                    <p id="summary-text">Your daily data stats will appear here...</p>
+                    <h2>Today's progress</h2>
+                    <p id = "summary-text">Your daily data stats will appear here...</p>
                 </div>
+            </div>
 
-                <div class="card">
-                    <h2>Monthly Habit Progress</h2>
-                </div>
+            <div class="chart-section">
+                <h2>Monthly Habit Progress</h2>
+                <canvas id="habitChart"></canvas>
+            </div>
 
-                <div class="card">
-                    <h2>Monthly Mood Distribution</h2>
-                </div>
-
+            <div class="chart-section">
+                <h2>Mood Distribution</h2>
+                <canvas id="moodChart"></canvas>
             </div>
         </section>
 
-        <section id="history" class="tab">
-            <div class="history-section">
-                <h2>Daily Logs</h2>
-                <div id="history-list">
-                    
+        <div id="history" class="tab">
+            <div class="logs-card">
+                <h3>Habit Tracker</h3>
+
+                <!-- Scroll wrapper -->
+                <div id="habit-tracker-container">
+                    <table id="habit-tracker"></table>
                 </div>
             </div>
 
-            <!-- STREAK TABLE -->
-            <div class="history-section">
-                <h2>Habit Streak Grid</h2>
-                <div id="streak-container">
-                    <table id="streak-table">
-                    </table>
-                </div>
-            </div>
-        </section>
+            
+        </div>
 
         <section id="tasks" class="tab">
-            <div class="tasks-container">
-                <h2>Tasks</h2>
+            <div id="heatmap-container">
+                <h3>Activity</h3>
+                <div id="heatmap"></div>
+            </div>
 
-                <div class="add-task">
-                    <input type="text" id="task-input" placeholder="Enter a task">
-                    <button id="add-task-btn">Add</button>
+            <div id="streak-stats">
+                <p id="current-streak"></p>
+                <p id="best-streak"></p>
+            </div>
+
+            <div class="tasks-card">
+                <h3>Tasks</h3>
+
+                <div class="task-input">
+                    <input type="text" id="task-input" placeholder="Add a task...">
+                    <button id="add-task">Add</button>
                 </div>
 
-                <ul id="task-list"></ul>
+                <div id="task-list"></div>
             </div>
         </section>
 

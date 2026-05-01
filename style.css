@@ -5,6 +5,18 @@
     --accent-dark: #245d27;
     --text-primary: #1b1b1b;
     --card-bg: #ffffff;
+
+    --chart-line: #367a38;
+    --chart-fill: rgba(54, 122, 56, 0.2);
+    --chart-point: #245d27;
+
+    --mood-happy:#367a38 ;
+    --mood-good: #4caf50 ;
+    --mood-neutral: #cddc39;
+    --mood-sad: #ff9800;
+    --mood-angry: #f44336;
+
+    --chart-text: #1b1b1b;
 }
 
 .dark{
@@ -14,6 +26,9 @@
     --accent-dark: #a5d6a7;
     --text-primary: #f5f5dc;
     --card-bg: #123524;
+
+    --chart-text: #f5f5dc;
+    --chart-fill: rgba(129, 199, 132, 0.2); /* softer green */
 }
 
 *{
@@ -394,10 +409,9 @@ nav button.active{
 .tab{
     display: none;
     flex: 1;
-    min-height: 0;
 }
 
-#dashboard.tab.active{
+#dashboard.active{
     display: grid;
 }
 
@@ -424,5 +438,188 @@ nav button.active{
 }
 
 .not-done {
+    background-color: #eee;
+}
+
+#analytics canvas{
+    max-width: 100%;
+    height: 300px !important;
+}
+
+#analytics{
+    
+    overflow-y: auto;
+}
+
+.chart-section{
+    background-color: var(--bg-secondary);
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+
+.analytics-container .card{
+    margin-top: 20px;
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#heatmap-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+    padding: 10px;
+}
+
+#heatmap {
+    display: grid;
+
+    /* 7 rows fixed (GitHub style) */
+    grid-template-rows: repeat(7, 12px);
+
+    grid-auto-flow: column;
+
+    /* FIX: make columns also match cell size */
+    grid-auto-columns: 12px;
+
+    gap: 3px;
+}
+
+/* 🔥 FIX: remove fixed width/height conflict */
+.heatmap-cell {
+    width: 12px;   /* CHANGED */
+    height: 12px;  /* CHANGED */
+
+    border-radius: 2px;
+    cursor: pointer;
+
+    transition: transform 0.1s ease;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.4);
+}
+
+.level-0 { background-color: #ebedf0; }
+.level-1 { background-color: #c6e48b; }
+.level-2 { background-color: #7bc96f; }
+.level-3 { background-color: #239a3b; }
+.level-4 { background-color: #196127; }
+
+.tasks-card{
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.task-input{
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.task-input input{
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--bg-secondary);
+    background: var(--bg-secondary);
+}
+
+.task-input button{
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+.task-item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.task-item.completed{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.logs-card{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+}
+
+/* Scroll for 30 days */
+#habit-tracker-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    /* 🔥 allow full screen usage */
+    overflow: auto;
+
+    margin-top: 10px;
+}
+
+/* Table styling */
+#habit-tracker{
+    border-collapse: collapse;
+
+    /* 🔥 allow full width but not forced */
+    width: max-content;
+
+    /* 🔥 take full height of container */
+    min-height: 100%;
+}
+
+/* Cells */
+#habit-tracker th,
+#habit-tracker td{
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: center;
+    font-size: 12px;
+    min-width: 40px;
+    height: 40px; /* gives stable grid feel */
+
+}
+
+/* Sticky habit name column */
+#habit-tracker th:first-child,
+#habit-tracker td:first-child{
+    position: sticky;
+    left: 0;
+    background: var(--card-bg);
+    z-index: 2;
+    font-weight: bold;
+    min-width: 140px; /* FIX readability */
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Colors */
+.habit-done{
+    background-color: #4caf50;
+}
+
+.habit-missed{
     background-color: #eee;
 }
