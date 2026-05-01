@@ -1,0 +1,428 @@
+:root{
+    --bg-primary: #a6be8c;
+    --bg-secondary: #d4e8c7;
+    --accent: #367a38;
+    --accent-dark: #245d27;
+    --text-primary: #1b1b1b;
+    --card-bg: #ffffff;
+}
+
+.dark{
+    --bg-primary: #0f2f1f;
+    --bg-secondary: #174d2a;
+    --accent: #81c784;
+    --accent-dark: #a5d6a7;
+    --text-primary: #f5f5dc;
+    --card-bg: #123524;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body{
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* MAIN */
+main{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* HEADER */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+/* NAV */
+nav{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+nav button{
+    flex: 1;
+    padding: 10px;
+
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--text-primary);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+nav button:hover{
+    background-color: var(--card-bg);
+}
+
+nav button.active{
+    background-color: var(--accent);
+    color: white;
+    font-weight: bold;
+}
+
+/* DASHBOARD */
+#dashboard{
+    /* display: grid; */
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 20px;
+
+    flex: 1;
+    min-height: 0;
+}
+
+/* JOURNAL */
+.journal{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+
+    min-height: 0;
+}
+
+.journal textarea{
+    flex: 1;
+    overflow-y: auto;
+
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+
+    border-radius: 8px;
+    border: 1px solid var(--bg-secondary);
+
+    resize: none;
+    outline: none;
+
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.journal button{
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: var(--accent);
+    color: white;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.journal button:hover{
+    transform: scale(1.05);
+    background-color: var(--accent-dark);
+}
+
+/* GRATITUDE */
+.gratitude{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+
+    background-color: var(--card-bg);
+    padding: 12px;
+    border-radius: 10px;
+
+    height: 120px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#gratitude-input{
+    width: 100%;
+    height: 80px; /* fixed height */
+    padding: 8px;
+    margin-top: 2px;
+
+    border-radius: 6px;
+    border: 1px solid var(--bg-secondary);
+
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+
+    outline: none;
+
+    resize: none;           /* prevent resizing */
+    overflow-y: auto;       /* THIS enables scroll */
+}
+
+/* Clean scrollbar */
+#habit-list::-webkit-scrollbar{
+    width: 5px;
+}
+
+#habit-list::-webkit-scrollbar-thumb{
+    background: var(--accent-dark);
+    border-radius: 10px;
+}
+/* Button */
+#save-gratitude{
+    
+    padding: 8px 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: var(--accent);
+    color: var(--card-bg);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+#save-gratitude:hover{
+    transform: scale(1.05);
+    background-color: var(--accent-dark);
+}
+
+#save-gratitude:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* RIGHT PANEL */
+.right-panel{
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    min-height: 0;
+}
+
+/* CARDS */
+.habits,
+.health,
+.mood{
+    background-color: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+}
+
+/* HABITS */
+.habits{
+    display: flex;
+    flex-direction: column;
+    flex: 1.2;
+    min-height: 0;
+}
+
+#habit-list{
+    margin-top: 10px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Habit item */
+.habit-item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px;
+    margin-bottom: 6px;
+
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+}
+
+.completed{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* WATER */
+.health{
+    flex: 0.8;
+}
+
+.health div{
+    padding: 8px;
+}
+
+.glasses{
+    
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 10px;
+
+}
+
+.glass{
+    position: relative;
+
+    width: 40px;
+    height: 45px;
+
+    border: 2px solid var(--accent);
+    border-radius: 0 0 10px 10px;
+
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.glass::before{
+    content: "";
+
+    position: absolute;
+    top: 10px;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: rgba(0,0,0,0.1);
+}
+
+.glass::after{
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 0%;
+
+    background: linear-gradient(
+        to top,
+        var(--accent-dark),
+        var(--accent)
+    );
+    transition: height 0.3s ease;
+}
+
+.glass.filled::after{
+    height: 75%;
+}
+
+.glass:hover{
+    transform: scale(1.03);
+}
+
+/* MOOD */
+.mood{
+    flex: 0.8;
+}
+
+.mood-options{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 20px;
+}
+
+.mood-btn{
+    flex: 1;
+
+    padding: 10px;
+    font-size: 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.mood-btn:hover{
+    transform: scale(1.25);
+    background-color: var(--card-bg);
+}
+
+.mood-btn.active{
+    background-color: var(--accent);
+    color: white;
+}
+
+/* SHADOW */
+.journal,
+.habits,
+.health,
+.mood,
+.gratitude{
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* TABS */
+.tab{
+    display: none;
+    flex: 1;
+    min-height: 0;
+}
+
+#dashboard.tab.active{
+    display: grid;
+}
+
+.tab.active{
+    display: flex;
+    flex-direction: column;
+}
+
+#streak-container table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#streak-container th,
+#streak-container td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+
+.done {
+    background-color: #4caf50;
+    color: white;
+}
+
+.not-done {
+    background-color: #eee;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MindTrack</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+
+        <header>
+            <h1>MIND TRACKER</h1>
+            <button id="theme-toggle">🌙</button>
+        </header>
+
+        <nav>
+            <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="analytics">Analytics</button>
+            <button class="tab-btn" data-tab="history">Logs</button>            
+            <button class="tab-btn" data-tab="tasks">Tasks</button>
+        </nav>
+
+        <section id="dashboard" class="tab active">
+            <div class="journal">
+                <h2>Today's Prompt</h2>
+                <p id="prompt-text"></p>
+                <textarea id="journal-input" placeholder="Write your thoughts..."></textarea>
+                <button id="save-entry">Save Entry</button>
+            </div>
+
+            <div class="gratitude">
+                <h2>Gratitude</h2>
+                <input 
+                    type="text" 
+                    id="gratitude-input" 
+                    placeholder="One thing you’re grateful for today..."
+                />
+                <button id="save-gratitude">Gratify</button>
+            </div>
+
+            <div class="right-panel">
+
+                <div class="habits">
+                    <h2>Habits</h2>
+                    <div id="habit-list"></div>
+                </div>
+
+                <div class="health">
+                    <h2>Water Intake</h2>
+                    <div class="water">
+                        <div class="glasses">
+                            <div class="glass" data-index="1"></div>
+                            <div class="glass" data-index="2"></div>
+                            <div class="glass" data-index="3"></div>
+                            <div class="glass" data-index="4"></div>
+                            <div class="glass" data-index="5"></div>
+                            <div class="glass" data-index="6"></div>
+                            <div class="glass" data-index="7"></div>
+                            <div class="glass" data-index="8"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mood">
+                    <h2 id="mood-heading">How are you feeling today?</h2>
+                    <div class="mood-options">
+                        <button class="mood-btn" data-mood="happy">😄</button>
+                        <button class="mood-btn" data-mood="good">🙂</button>
+                        <button class="mood-btn" data-mood="neutral">😐</button>
+                        <button class="mood-btn" data-mood="sad">😔</button>
+                        <button class="mood-btn" data-mood="angry">😡</button>
+                    </div>
+                    <p id="mood-quote"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="analytics" class="tab">
+            <select id="month-select">
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+            </select>
+            <h2>Monthly Habit Progress</h2>
+            <canvas id="habitChart"></canvas>
+
+            <h2>Mood Distribution</h2>
+            <canvas id="moodChart"></canvas>
+
+            <div class="analytics-container">
+                <div class="card">
+                    <h2>Today's Progress</h2>
+                    <p id="summary-text">Your daily data stats will appear here...</p>
+                </div>
+
+                <div class="card">
+                    <h2>Monthly Habit Progress</h2>
+                </div>
+
+                <div class="card">
+                    <h2>Monthly Mood Distribution</h2>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="history" class="tab">
+            <div class="history-section">
+                <h2>Daily Logs</h2>
+                <div id="history-list">
+                    
+                </div>
+            </div>
+
+            <!-- STREAK TABLE -->
+            <div class="history-section">
+                <h2>Habit Streak Grid</h2>
+                <div id="streak-container">
+                    <table id="streak-table">
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="tasks" class="tab">
+            <div class="tasks-container">
+                <h2>Tasks</h2>
+
+                <div class="add-task">
+                    <input type="text" id="task-input" placeholder="Enter a task">
+                    <button id="add-task-btn">Add</button>
+                </div>
+
+                <ul id="task-list"></ul>
+            </div>
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
