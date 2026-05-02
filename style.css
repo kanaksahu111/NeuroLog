@@ -474,6 +474,7 @@ nav button.active{
     overflow-y: hidden;
     
     padding: 10px;
+    
 }
 
 #heatmap {
@@ -492,6 +493,7 @@ nav button.active{
 
 /* 🔥 FIX: remove fixed width/height conflict */
 .heatmap-cell {
+    
     width: 12px;   /* CHANGED */
     height: 12px;  /* CHANGED */
 
@@ -610,7 +612,7 @@ nav button.active{
     background: var(--card-bg);
     z-index: 2;
     font-weight: bold;
-    min-width: 140px; /* FIX readability */
+    min-width: 140px; 
     text-align: left;
     padding-left: 10px;
 }
@@ -622,4 +624,90 @@ nav button.active{
 
 .habit-missed{
     background-color: #eee;
+}
+
+
+.progress-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+
+.progress-hero{
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.progress-hero h1{
+    font-size: 30px;
+    margin: 0;
+}
+
+.progress-hero p{
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.progress-hero{
+    transition: transform 0.25s ease;
+}
+
+.progress-hero:hover{
+    transform: scale(1.02);
+}
+
+.progress-stats{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.stat{
+    flex: 1;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat:hover{
+    transform: scale(1.06);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.stat span{
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.progress-insight{
+    font-size: 18px;      
+    font-weight: 600;    
+    line-height: 1.6;
+
+    padding: 6px 2px;
+    margin-top: 4px;
+
+    
+}
+
+.stat label{
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.card h2{
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.6;
+    opacity: 0.9;
 }

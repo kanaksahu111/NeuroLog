@@ -204,17 +204,64 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = trackerData[today];
         if(!data) return;
 
-        const totalHabits = data.habits.length;
-        const completedHabits = data.habits.filter(h => h.done).length;
+        const tasks = data.tasks || [];
+        const habits = data.habits || [];
+
+        // ================= TASK METRICS (PRIMARY PRODUCTIVITY) =================
+        const totalTasks = tasks.length;
+        const completedTasks = tasks.filter(t => t.done).length;
+        const taskProductivity = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+        // ================= HABIT METRICS (SECONDARY INSIGHT) =================
+        const totalHabits = habits.length;
+        const completedHabits = habits.filter(h => h.done).length;
+        const habitRate = totalHabits === 0 ? 0 : Math.round((completedHabits / totalHabits) * 100);
+
         const water = data.water;
-        const mood = data.mood ? data.mood: "not selected";
-        const productivity = totalHabits ? Math.round((completedHabits/totalHabits)*100) : 0;       
+        const mood = data.mood || "not selected";
+
+        let insight = "";
+
+        if(taskProductivity >= 80){
+            insight = "🔥 Excellent productivity! Keep the momentum going.";
+        } else if(taskProductivity >= 50){
+            insight = "🙂 Good progress, You’re on the right track.";
+        } else if(taskProductivity > 0){
+            insight = "⚡ Small steps matter, Try completing 1 more task.";
+        } else {
+            insight = "🧠 Start with one small task today.";
+        }
+
         summaryText.innerHTML = `
-        <strong>Habits:</strong> ${completedHabits}/${totalHabits} completed <br>
-        <strong>Water:</strong> ${water} glasses <br>
-        <strong>Mood:</strong> ${mood} <br>
-        <strong>Productivity:</strong> ${productivity}% 
-    `};
+            <div class="progress-container">
+
+                <!-- 🔥 MAIN HERO METRIC -->
+                <div class="progress-hero">
+                    <h1>${taskProductivity}%</h1>
+                </div>
+
+                <!-- 📊 STATS ROW -->
+                <div class="progress-stats">
+                    <div class="stat">
+                        <span>${completedTasks}/${totalTasks}</span>
+                        <label>Tasks</label>
+                    </div>
+                    <div class="stat">
+                        <span>${completedHabits}/${totalHabits}</span>
+                        <label>Habits</label>
+                    </div>
+                    <div class="stat">
+                        <span>${water}</span>
+                        <label>Water</label>
+                    </div>
+                </div>
+
+                <!-- 🧠 MOOD + INSIGHT -->
+                <p class="progress-insight">${insight}</p>
+
+            </div>
+        `;
+    }
 
     function renderHabitChart(){
 
@@ -237,10 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dateStr = d.toDateString();
                 const dayData = trackerData[dateStr];
 
-                // ✅ FIX: prevent undefined crash
                 if (!dayData) return;
 
-                // ================= FIX: TASK-BASED PRODUCTIVITY =================
                 const tasks = dayData.tasks || [];
                 const total = tasks.length;
                 const done = tasks.filter(t => t.done).length;
@@ -354,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     moodChartInstance = new Chart(ctx, {
-        type: "line", // ✅ line chart fits time-series better than bar
+        type: "line", 
 
         data: {
             labels: labels,
@@ -466,7 +511,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         habitNames.forEach((habitName, habitIndex) => {
 
-            // 👉 Create a row for each habit
             const row = document.createElement("tr");
             const nameCell = document.createElement("td");
             nameCell.textContent = habitName;
@@ -526,12 +570,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - totalDays);
 
-    // ✅ IMPORTANT:
-    // Align to Sunday (GitHub style)
     const startDay = startDate.getDay(); // 0 = Sunday
     startDate.setDate(startDate.getDate() - startDay);
 
-    // 👉 Loop through ALL days (including padding days)
     for (let i = 0; i < totalDays + startDay; i++) {
 
         const date = new Date(startDate);
@@ -685,11 +726,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                 }else{
-                    // No data → neutral
                     cell.classList.add("habit-missed");
                 }
 
-                // Tooltip
                 cell.title = dateStr;
 
                 row.appendChild(cell);
