@@ -17,18 +17,39 @@
     --mood-angry: #f44336;
 
     --chart-text: #1b1b1b;
+
+    --border-color: #ddd;
+    --muted-bg: #eee;
+
+    --shadow-soft: 0 4px 10px rgba(0,0,0,0.05);
+    --shadow-strong: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+*{
+    transition: background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .dark{
-    --bg-primary: #0f2f1f;
-    --bg-secondary: #174d2a;
-    --accent: #81c784;
-    --accent-dark: #a5d6a7;
-    --text-primary: #f5f5dc;
-    --card-bg: #123524;
+    --bg-primary: #071a12;        /* deeper base */
+    --bg-secondary: #0d241b;      /* section bg */
+    --card-bg: #112e22;           /* cards */
 
-    --chart-text: #f5f5dc;
-    --chart-fill: rgba(129, 199, 132, 0.2); /* softer green */
+    --accent: #66bb6a;            /* vibrant green */
+    --accent-dark: #43a047;
+
+    --text-primary: #ecfdf5;      /* soft white */
+    --text-secondary: #9adbb0;
+
+    --border-color: rgba(255,255,255,0.08);
+    --muted-bg: #1a3a2b;
+
+    --chart-text: #e8f5e9;
+    --chart-grid: rgba(230, 210, 210, 0.08);
+    --chart-line: #81c784;
+    --chart-fill: rgba(129,199,132,0.15);
+    --chart-point: #a5d6a7;
 }
 
 *{
@@ -232,7 +253,7 @@ nav button.active{
 
 #save-gratitude:hover{
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-soft);
 }
 
 /* RIGHT PANEL */
@@ -427,7 +448,7 @@ nav button.active{
 
 #streak-container th,
 #streak-container td {
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     padding: 6px;
     text-align: center;
 }
@@ -438,7 +459,7 @@ nav button.active{
 }
 
 .not-done {
-    background-color: #eee;
+    background-color: var(--muted-bg);
 }
 
 #analytics canvas{
@@ -507,7 +528,7 @@ nav button.active{
     transform: scale(1.4);
 }
 
-.level-0 { background-color: #ebedf0; }
+.level-0 { background-color: var(--muted-bg) }
 .level-1 { background-color: #c6e48b; }
 .level-2 { background-color: #7bc96f; }
 .level-3 { background-color: #239a3b; }
@@ -595,7 +616,7 @@ nav button.active{
 /* Cells */
 #habit-tracker th,
 #habit-tracker td{
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     padding: 6px;
     text-align: center;
     font-size: 12px;
@@ -623,17 +644,14 @@ nav button.active{
 }
 
 .habit-missed{
-    background-color: #eee;
+    background-color: var(--muted-bg);
 }
-
 
 .progress-container{
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
-
-
 
 .progress-hero{
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
@@ -656,10 +674,6 @@ nav button.active{
 
 .progress-hero{
     transition: transform 0.25s ease;
-}
-
-.progress-hero:hover{
-    transform: scale(1.02);
 }
 
 .progress-stats{
@@ -696,8 +710,6 @@ nav button.active{
 
     padding: 6px 2px;
     margin-top: 4px;
-
-    
 }
 
 .stat label{
@@ -710,4 +722,26 @@ nav button.active{
     font-weight: 600;
     line-height: 1.6;
     opacity: 0.9;
+}
+
+.dark .stat,
+.dark .tasks-card,
+.dark .logs-card{
+    background: linear-gradient(
+        145deg,
+        #123524,
+        #0f2f1f
+    );
+}
+
+.dark .journal,
+.dark .habits,
+.dark .health,
+.dark .mood,
+.dark .tasks-card,
+.dark .logs-card,
+.dark .stat{
+    box-shadow: 
+        0 4px 12px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.03);
 }

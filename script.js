@@ -3,12 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getCSSVar(name){
         return getComputedStyle(document.documentElement)
-            .getPropertyValue(name)
-            .trim();
+        .getPropertyValue(name)
+        .trim();
     }
     let habitChartInstance = null;
     let moodChartInstance = null;
 
+    function refreshCharts(){
+        renderHabitChart();
+        renderMoodChart();
+    }
     const today = new Date().toDateString();
     let trackerData = JSON.parse(localStorage.getItem("trackerData")) || {};
     const now = new Date();
@@ -26,6 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.getElementById("task-input");
     const addTaskBtn = document.getElementById("add-task");
     const taskList = document.getElementById("task-list");
+
+    const toggle = document.getElementById("theme-toggle");
+    toggle.addEventListener("click" , ()=>{
+        document.documentElement.classList.toggle("dark");
+        refreshCharts();
+    });
 
     if(!trackerData[today]){
         trackerData[today] = {
@@ -264,7 +274,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderHabitChart(){
-
+        const textColor = getCSSVar("--text-primary");
+        const gridColor = getCSSVar("--chart-grid");
         const canvas = document.getElementById("habitChart");
         if(!canvas) return;
 
@@ -328,7 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 plugins: {
                     legend: {
                         labels: {
-                            color: getCSSVar("--chart-text")
+                            color: getCSSVar("--chart-text"),
+                            opacity: 0.5
                         }
                     }
                 },
@@ -337,12 +349,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         beginAtZero: true,
                         max: 100,
                         ticks: {
-                            color: getCSSVar("--chart-text")
+                            color: getCSSVar("--text-primary")
+                        },
+                        grid: {
+                            color: getCSSVar("--chart-grid"),
+                            opacity: 0.5
                         }
                     },
                     x: {
                         ticks: {
-                            color: getCSSVar("--chart-text")
+                            color: textColor
+                        },
+                        grid: {
+                            color: gridColor
                         }
                     }
                 }
@@ -351,6 +370,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderMoodChart(){
+
+    const textColor = getCSSVar("--text-primary");
+    const gridColor = getCSSVar("--chart-grid");
 
     const canvas = document.getElementById("moodChart");
     if(!canvas) return;
@@ -437,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
             plugins: {
                 legend: {
                     labels: {
-                        color: getCSSVar("--chart-text")
+                        color: getCSSVar("--text-primary")
                     }
                 }
             },
@@ -449,7 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     ticks: {
                         stepSize: 1,
-                        color: getCSSVar("--chart-text"),
+                        color: textColor,
 
                         // Convert numbers back to mood labels
                         callback: function(value){
@@ -462,6 +484,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             };
                             return reverse[value];
                         }
+                    },
+                    grid:{
+                        color: gridColor,
+                        opacity: 0.5
                     }
                 },
 
@@ -469,10 +495,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: {
                         display: true,
                         text: "Days of Month",
-                        color: getCSSVar("--chart-text")
+                        color: getCSSVar("--text-primary")
                     },
                     ticks: {
-                        color: getCSSVar("--chart-text")
+                        color: textColor
+                    },
+                    grid:{
+                        color: gridColor
                     }
                 }
             }
