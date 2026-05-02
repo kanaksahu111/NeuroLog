@@ -1,6 +1,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const savedTheme = localStorage.getItem("theme");
+    if(savedTheme === "dark"){
+        document.documentElement.classList.add("dark");
+    }
+
     function getCSSVar(name){
         return getComputedStyle(document.documentElement)
         .getPropertyValue(name)
@@ -32,10 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
 
     const toggle = document.getElementById("theme-toggle");
-    toggle.addEventListener("click" , ()=>{
-        document.documentElement.classList.toggle("dark");
-        refreshCharts();
-    });
+    if(toggle){
+        toggle.addEventListener("click" , ()=>{
+            document.documentElement.classList.toggle("dark");
+
+            if(document.documentElement.classList.contains("dark")){
+                localStorage.setItem("theme" , "dark");
+            }else{
+                localStorage.setItem("theme" , "light");
+            }
+            refreshCharts();
+        });
+    }
 
     if(!trackerData[today]){
         trackerData[today] = {
@@ -767,8 +780,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
-
-
-
 

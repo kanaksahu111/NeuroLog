@@ -21,6 +21,11 @@
     --border-color: #ddd;
     --muted-bg: #eee;
 
+    --heat-1: #c6e48b;
+    --heat-2: #7bc96f;
+    --heat-3: #239a3b;
+    --heat-4: #196127;
+
     --shadow-soft: 0 4px 10px rgba(0,0,0,0.05);
     --shadow-strong: 0 6px 20px rgba(0,0,0,0.08);
 }
@@ -50,6 +55,15 @@
     --chart-line: #81c784;
     --chart-fill: rgba(129,199,132,0.15);
     --chart-point: #a5d6a7;
+
+    --surface-soft: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.06);
+    --input-bg: rgba(255,255,255,0.05);
+
+    --heat-1: #2e7d32;
+    --heat-2: #388e3c;
+    --heat-3: #43a047;
+    --heat-4: #66bb6a;
 }
 
 *{
@@ -480,7 +494,6 @@ nav button.active{
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-
 .analytics-container .card{
     margin-top: 20px;
     background-color: var(--bg-secondary);
@@ -493,53 +506,82 @@ nav button.active{
 #heatmap-container {
     overflow-x: auto;
     overflow-y: hidden;
-    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding: 10px;
-    
+    width: 100%;
 }
 
 #heatmap {
     display: grid;
 
-    /* 7 rows fixed (GitHub style) */
-    grid-template-rows: repeat(7, 12px);
-
+    grid-template-rows: repeat(7, 1fr);
     grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(16px,1fr));
+    /* grid-auto-columns: 14px; */
 
-    /* FIX: make columns also match cell size */
-    grid-auto-columns: 12px;
-
-    gap: 3px;
+    gap: 2px;
+    width: 100%;
 }
 
-/* 🔥 FIX: remove fixed width/height conflict */
 .heatmap-cell {
-    
-    width: 12px;   /* CHANGED */
-    height: 12px;  /* CHANGED */
-
+    width: 14px;  
+    height: 14px;  
     border-radius: 2px;
     cursor: pointer;
-
+    
     transition: transform 0.1s ease;
 }
 
-.heatmap-cell:hover {
-    transform: scale(1.4);
-}
-
-.level-0 { background-color: var(--muted-bg) }
-.level-1 { background-color: #c6e48b; }
-.level-2 { background-color: #7bc96f; }
-.level-3 { background-color: #239a3b; }
-.level-4 { background-color: #196127; }
-
-.tasks-card{
+.heatmap-box{
     background: var(--card-bg);
     padding: 16px;
     border-radius: 12px;
     margin-bottom: 20px;
     margin-top: 20px;
+}
+
+.dark .heatmap-box{
+    background: linear-gradient(
+        145deg,
+        var(--card-bg),
+        var(--bg-secondary)
+    );
+    border: 1px solid var(--border-color);
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.2);
+}
+
+.level-0 { background-color: var(--muted-bg); }
+.level-1 { background-color: var(--heat-1); }
+.level-2 { background-color: var(--heat-2); }
+.level-3 { background-color: var(--heat-3); }
+.level-4 { background-color: var(--heat-4); }
+
+
+.tasks-card{
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 300px;
+    overflow-y: auto;
+    padding-right: 4px ;
+}
+
+.tasks-card h3{
+    z-index: 5;
+    padding: 0;
 }
 
 .task-input{
@@ -554,6 +596,7 @@ nav button.active{
     border-radius: 6px;
     border: 1px solid var(--bg-secondary);
     background: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .task-input button{
@@ -565,19 +608,51 @@ nav button.active{
     cursor: pointer;
 }
 
+.task-input button:hover{
+    background-color: var(--accent-dark);
+}
+
 .task-item{
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 6px;
     background: var(--bg-secondary);
+    border: 1px solid var(--bg-secondary);
     border-radius: 6px;
     margin-bottom: 6px;
+}
+
+.task-item:hover{
+    background: var(--surface-hover);
 }
 
 .task-item.completed{
     text-decoration: line-through;
     opacity: 0.6;
+}
+
+.task-item-container{
+    max-height: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding-right: 4px;
+}
+
+.task-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list-container::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+.dark .task-item{
+    background: var(--surface-soft);
+    border: 1px solid var(--border-color);
 }
 
 .logs-card{
@@ -595,19 +670,17 @@ nav button.active{
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    /* 🔥 allow full screen usage */
     overflow: auto;
 
     margin-top: 10px;
 }
 
-/* Table styling */
 #habit-tracker{
     border-collapse: collapse;
 
     /* 🔥 allow full width but not forced */
-    width: max-content;
+    width: 100%;
+    table-layout: fixed;
 
     /* 🔥 take full height of container */
     min-height: 100%;
