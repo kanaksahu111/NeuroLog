@@ -13,7 +13,7 @@
     <main>
 
         <header>
-            <h1>MIND TRACKER</h1>
+            <h1>Let's get your life tracked</h1>
             <button id="theme-toggle">🌙</button>
         </header>
 
@@ -22,11 +22,12 @@
             <button class="tab-btn" data-tab="analytics">Analytics</button>
             <button class="tab-btn" data-tab="history">Logs</button>            
             <button class="tab-btn" data-tab="tasks">Tasks</button>
+            <button class="tab-btn" data-tab="journal-history">Journal</button>
         </nav>
 
         <section id="dashboard" class="tab active">
             <div class="journal">
-                <h2>Today's Prompt</h2>
+                <h2>How was your day</h2>
                 <p id="prompt-text"></p>
                 <textarea id="journal-input" placeholder="Write your thoughts..."></textarea>
                 <button id="save-entry">Save Entry</button>
@@ -147,6 +148,16 @@
 
                 <div class="task-list-container">
                     <div id="task-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journal-history" class="tab">
+            <div class="journal-history-card">
+                <h3>Journal History</h3>
+                <input type="date" id="journal-date-picker">
+                <div id="journal-display">
+                    
                 </div>
             </div>
         </section>

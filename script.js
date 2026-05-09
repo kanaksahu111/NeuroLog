@@ -62,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
             tasks: [],
             mood: null,
             water: 0,
-            journal: ""
+            journal: "",
+            gratitude: ""
         };
     }
 
@@ -76,6 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const glasses = document.querySelectorAll(".glass");
     const journalInput = document.querySelector("#journal-input");
     const summaryText = document.querySelector("#summary-text");
+    const gratitudeInput = document.getElementById("gratitude-input");
+    const saveGratitudeBtn = document.getElementById("save-gratitude");
+    const datepicker = document.getElementById("journal-date-picker");
 
     const quotes = {
         happy: "Keep shining, you're doing amazing",
@@ -86,6 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     let habits = trackerData[today].habits || [];
+
+    if(saveGratitudeBtn){
+        saveGratitudeBtn.addEventListener("click" , ()=>{
+            const value = gratitudeInput.value.trim();
+            trackerData[today].gratitude = value;
+            saveData();
+        });
+    }
 
     function renderHabits(){
         habitList.innerHTML = "";
@@ -157,6 +169,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function loadGratitude(){
+        if(gratitudeInput && trackerData[today]){
+            gratitudeInput.value = trackerData[today].gratitude || "";
+        }
+    }
+
+    if(gratitudeInput) loadGratitude();
+
+    function renderJournalByDate(dateStr){
+        const display = document.getElementById("journal-display");
+        if(!display) return;
+
+        const selectedDate = new Date(dateStr).toDateString();
+        const data = trackerData[selectedDate];
+
+        if(!data){
+            display.innerHTML = `<p> class="empty-state"> No entry for this day </p>`;
+            return;
+        }
+
+        display.innerHTML = `
+            <div class="daily-insights">
+                <h3> Daily insights </h3>
+                <p>${data.journal || "No Journal entry"} </p>
+            </div>
+            
+            <div class="grateful">
+                <h3> Grateful for :- </h3>
+                <p> ${data.gratitude || "No Journal entry"} </p>
+            </div>
+        `;
+    }
+
+    if(datepicker){
+        datepicker.addEventListener("change" , (e)=>{
+            renderJournalByDate(e.target.value);
+        });
+    }
+    
     function getEmoji(mood){
         const map = {
             happy: "😄",
@@ -413,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (
             d.getMonth() === activeMonth &&
             d.getFullYear() === currentYear
-        ) {
+        ){
             const dateStr = d.toDateString();
             const dayData = trackerData[dateStr];
 
@@ -602,54 +653,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderHeatmap() {
 
-    const container = document.getElementById("heatmap");
-    if (!container) return;
+        const container = document.getElementById("heatmap");
+        if (!container) return;
 
-    container.innerHTML = "";
+        container.innerHTML = "";
 
-    const totalDays = 365;
+        const totalDays = 365;
 
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - totalDays);
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - totalDays);
 
-    const startDay = startDate.getDay(); // 0 = Sunday
-    startDate.setDate(startDate.getDate() - startDay);
+        const startDay = startDate.getDay(); // 0 = Sunday
+        startDate.setDate(startDate.getDate() - startDay);
 
-    for (let i = 0; i < totalDays + startDay; i++) {
+        for (let i = 0; i < totalDays + startDay; i++) {
 
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
+            const date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
 
-        const dateStr = date.toDateString();
-        const dayData = trackerData[dateStr];
+            const dateStr = date.toDateString();
+            const dayData = trackerData[dateStr];
 
-        let level = 0;
-        let completed = 0;
-        let total = 0;
+            let level = 0;
+            let completed = 0;
+            let total = 0;
 
-        // ✅ If data exists → calculate completion
-        if (dayData && dayData.tasks) {
+            // ✅ If data exists → calculate completion
+            if (dayData && dayData.tasks) {
 
-            total = dayData.tasks.length;
-            completed = dayData.tasks.filter(h => h.done).length;
+                total = dayData.tasks.length;
+                completed = dayData.tasks.filter(h => h.done).length;
 
-            const percent = total ? completed / total : 0;
+                const percent = total ? completed / total : 0;
 
-            if (percent === 0) level = 0;
-            else if (percent < 0.4) level = 1;
-            else if (percent < 0.7) level = 2;
-            else if (percent < 1) level = 3;
-            else level = 4;
+                if (percent === 0) level = 0;
+                else if (percent < 0.4) level = 1;
+                else if (percent < 0.7) level = 2;
+                else if (percent < 1) level = 3;
+                else level = 4;
+            }
+
+            const cell = document.createElement("div");
+            cell.classList.add("heatmap-cell", `level-${level}`);
+
+            cell.title = `${dateStr} | ${completed}/${total} tasks`;
+
+            container.appendChild(cell);
         }
-
-        const cell = document.createElement("div");
-        cell.classList.add("heatmap-cell", `level-${level}`);
-
-        cell.title = `${dateStr} | ${completed}/${total} tasks`;
-
-        container.appendChild(cell);
     }
-}
     renderHabits();
     updateSummary();
 
