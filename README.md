@@ -1,4 +1,4 @@
-# NeuroLog 🧠
+# LIFEGRID 🧠
 
 A modern productivity and mental wellness tracker built using **HTML, CSS, and JavaScript**.  
 NeuroLog helps users track habits, tasks, moods, water intake, gratitude, journals, and productivity analytics — all in one clean dashboard.
