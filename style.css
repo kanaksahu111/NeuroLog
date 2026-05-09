@@ -816,50 +816,5 @@ nav button.active{
 .dark .stat{
     box-shadow: 
         0 4px 12px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.03)
-    ;
-}
-
-.journal-history-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-#journal-date-picker {
-    margin: 10px 0;
-    padding: 8px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-}
-
-#journal-display {
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 10px;
-    min-height: 120px;
-}
-
-.daily-insights{
-    padding: 10px;
-    background-color: var(--muted-bg);
-    border-radius: 10px;
-    margin-bottom: 20px;
-    overflow-y: auto;
-}
-
-.grateful{
-    padding: 10px;
-    background-color: var(--muted-bg);
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-.journal-history{
-    flex: 1;
-    overflow-y: auto;
-    min-height: 0;
+        inset 0 1px 0 rgba(255,255,255,0.03);
 }

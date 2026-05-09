@@ -62,8 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tasks: [],
             mood: null,
             water: 0,
-            journal: "",
-            gratitude: ""
+            journal: ""
         };
     }
 
@@ -76,10 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const moodButtons = document.querySelectorAll(".mood-btn");
     const glasses = document.querySelectorAll(".glass");
     const journalInput = document.querySelector("#journal-input");
-    const gratitudeInput = document.getElementById("gratitude-input");
-    const saveGratitudeBtn = document.getElementById("save-gratitude");
     const summaryText = document.querySelector("#summary-text");
-    const datepicker = document.getElementById("journal-date-picker");
 
     const quotes = {
         happy: "Keep shining, you're doing amazing",
@@ -90,14 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     let habits = trackerData[today].habits || [];
-
-    if(saveGratitudeBtn){
-        saveGratitudeBtn.addEventListener("click" , ()=>{
-            const value = gratitudeInput.value.trim();
-            trackerData[today].gratitude = value;
-            saveData();
-        });
-    }
 
     function renderHabits(){
         habitList.innerHTML = "";
@@ -167,45 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             moodHeading.textContent = "How are you feeling today?";
         }
-    }
-
-    function loadGratitude(){
-        if(gratitudeInput && trackerData[today]){
-            gratitudeInput.value = trackerData[today].gratitude || "";
-        }
-    }
-
-    if(gratitudeInput) loadGratitude();
-
-    function renderJournalByDate(dateStr){
-        const display = document.getElementById("journal-display");
-        if(!display) return;
-
-        const selectedDate = new Date(dateStr).toDateString();
-        const data = trackerData[selectedDate];
-
-        if(!data){
-            display.innerHTML = `<p> class="empty-state"> No entry for this day </p>`;
-            return;
-        }
-
-        display.innerHTML = `
-            <div class="daily-insights">
-                <h3> Daily insights </h3>
-                <p>${data.journal || "No Journal entry"} </p>
-            </div>
-            
-            <div class="grateful">
-                <h3> Grateful for :- </h3>
-                <p> ${data.gratitude || "No Journal entry"} </p>
-            </div>
-        `;
-    }
-
-    if(datepicker){
-        datepicker.addEventListener("change" , (e)=>{
-            renderJournalByDate(e.target.value);
-        });
     }
 
     function getEmoji(mood){
